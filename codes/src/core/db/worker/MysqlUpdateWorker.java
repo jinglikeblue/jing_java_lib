@@ -1,5 +1,9 @@
 package core.db.worker;
 
+import java.sql.SQLException;
+
+import core.net.server.Console;
+
 
 /**
  * 不使用该对象时一定要调用dispose销毁对象
@@ -26,6 +30,13 @@ public class MysqlUpdateWorker extends AMysqlWorker
 	protected void excute(MysqlWorkerVO vo)
 	{
 		int count = ms.update(vo.sql);
-		vo.user.updateResult(vo.key, vo.data, count);
+		try
+		{
+			vo.user.updateResult(vo.key, vo.data, count);
+		}
+		catch(SQLException e)
+		{
+			Console.log.error(e);
+		}
 	}
 }

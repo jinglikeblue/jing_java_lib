@@ -261,7 +261,17 @@ public class Server extends EventDispatcher
 	 */
 	public IProtocolCacher getProtocolCacher(short protocolCode)
 	{
-		return _protocolCacherMap.get(protocolCode);
+		IProtocolCacher iPC = null;
+		
+		try
+		{
+			iPC = _protocolCacherMap.get(protocolCode).getClass().newInstance();
+		}
+		catch(InstantiationException | IllegalAccessException e)
+		{
+			Console.log.error(e);
+		}
+		return iPC;
 	}
 
 	/**

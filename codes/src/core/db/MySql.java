@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import core.net.server.Console;
+
 /**
  * MySql连接工具
  * 
@@ -197,7 +199,8 @@ public class MySql
 			}
 			catch(SQLException e)
 			{
-				e.printStackTrace();
+				Console.log.error("SQL QUERY: " + sql);
+				Console.log.error(e);
 				return null;
 			}
 		}

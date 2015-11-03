@@ -1,20 +1,21 @@
+
 package core.db.worker;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
+import core.net.server.Console;
 
 /**
  * 不使用该对象时一定要调用dispose销毁对象
  */
 public class MysqlQueryWorker extends AMysqlWorker
-{	
+{
 	private MysqlQueryWorker()
 	{
-		
+
 	}
-	
+
 	public static MysqlQueryWorker create(String address, int port, String user, String password, String dbName)
 	{
 		MysqlQueryWorker worker = new MysqlQueryWorker();
@@ -22,7 +23,7 @@ public class MysqlQueryWorker extends AMysqlWorker
 		{
 			return null;
 		}
-		
+
 		worker.start("MysqlQueryPool_Thread");
 		return worker;
 	}
@@ -30,16 +31,18 @@ public class MysqlQueryWorker extends AMysqlWorker
 	protected void excute(MysqlWorkerVO vo)
 	{
 		ResultSet rs = ms.query(vo.sql);
-		vo.user.queryResult(vo.key, vo.data, rs);
-		
-		try
+		if(null != rs)
 		{
-			rs.close();								
+			try
+			{			
+				vo.user.queryResult(vo.key, vo.data, rs);
+				rs.close();
+			}
+			catch(SQLException e)
+			{
+				Console.log.error(e);
+			}
 		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}		
 	}
-	
+
 }
