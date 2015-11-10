@@ -1,5 +1,5 @@
 
-package core.net.server;
+package core.net.server.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
