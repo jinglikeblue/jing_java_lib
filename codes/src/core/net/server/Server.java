@@ -58,6 +58,11 @@ public class Server extends EventDispatcher
 	static public enum EVENT
 	{
 		/**
+		 * 服务器进入新的一帧
+		 */
+		ENTER_FRAME,
+		
+		/**
 		 * 客户端已连接
 		 */
 		CLIENT_CONNECTED,
@@ -250,7 +255,7 @@ public class Server extends EventDispatcher
 
 	protected void enterFrame()
 	{
-		// need override
+		this.dispatchEvent(EVENT.ENTER_FRAME.name(), null);
 	}
 
 	/**
