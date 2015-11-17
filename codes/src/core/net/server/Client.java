@@ -136,7 +136,8 @@ public class Client
 
 		// 广播一个客户端断开连接的消息
 		Server.instance().dispatchEvent(EVENT.CLIENT_DISCONNECT.name(), this);
-		Console.log.log("client " + address.toString() + " disposed");
+		
+		Console.printInfo("client " + address.toString() + " disposed");
 	}
 
 }
